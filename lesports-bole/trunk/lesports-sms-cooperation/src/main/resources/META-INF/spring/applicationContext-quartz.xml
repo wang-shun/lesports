@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <!---   百度合作开始     -->
+    <!-- 百度合作更新数据 -->
+    <bean id="baiduSearchUpadateJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduSearchUpadate"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduSearchUpadateCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduSearchUpadateJobDetail"/>
+        <property name="cronExpression">
+            <value>30 3 0/1 * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度合作最热数据 -->
+    <bean id="baiduSearchHotJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduSearchHot"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduSearchHotCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduSearchHotJobDetail"/>
+        <property name="cronExpression">
+            <value>30 13 0/1 * * ?</value>
+        </property>
+    </bean>
+
+
+    <!-- 百度视频中超赛季 -->
+    <bean id="baiduVideoCslCompetitionDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduVideoCompetition"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduVideoCslCompetitionCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduVideoCslCompetitionDetail"/>
+        <property name="cronExpression">
+            <value>50 47 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度视频中超球队 -->
+    <bean id="baiduVideoCslTeamDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduVideoTeam"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduVideoCslTeamCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduVideoCslTeamDetail"/>
+        <property name="cronExpression">
+            <value>50 3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度中超阿拉丁 -->
+    <bean id="baiduCslStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduCslStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduCslStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduCslStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>35 2/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度英超阿拉丁 -->
+    <bean id="baiduEplStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduEplStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduEplStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduEplStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>40 45 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度意甲阿拉丁 -->
+    <bean id="baiduSerieaStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduSerieaStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduSerieaStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduSerieaStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>55 45 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度视频奥运 -->
+    <bean id="baiduSearchOlyJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="olyCooperationJob"/>
+        <property name="targetMethod" value="baiduSearchOly"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduSearchOlyCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduSearchOlyJobDetail"/>
+        <property name="cronExpression">
+            <value>40 0/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  百度mlb  -->
+    <bean id="baiduMLBStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduMLBStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMLBStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMLBStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>10 5/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度12强 pc端 -->
+    <bean id="baiduTop12PcStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="baiduTop12PcStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduTop12PcStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduTop12PcStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/3 * * * ?</value>
+        </property>
+    </bean>
+    <!-- 百度12强 移动端 -->
+    <bean id="baiduTop12AganistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="baiduAganist"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduTop12AganistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduTop12AganistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/2 * * * ?</value>
+        </property>
+    </bean>
+    <!-- 百度12强  简版 -->
+    <bean id="baiduTop12SimpleScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="BaiduSimpleSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduTop12SimpleScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduTop12SimpleScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/2 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度合作赛程 -->
+    <bean id="baiduTop12ScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="BaiduSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduTop12ScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduTop12ScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/2 * * * ?</value>
+        </property>
+    </bean>
+
+
+    <!-- 百度12强视频 -->
+    <bean id="baiduTop12VideoStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="baiduTop12VideosStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduTop12VideoStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduTop12VideoStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>40 45 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 nfl 阿拉丁-->
+    <bean id="baiduNflPcStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduNflStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduNflPcStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduNflPcStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>40 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 nfl 移动 阿拉丁-->
+    <bean id="baiduNflMobStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduNflMobStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduNflMobStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduNflMobStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>35 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 自制节目综合-->
+    <bean id="baiduAlbumStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduAlbum"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduAlbumStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduAlbumStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>20 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 自制节目单期-->
+    <bean id="baiduAlbumItemStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduAlbumItem"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduAlbumItemStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduAlbumItemStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>25 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 中超直播-->
+    <bean id="baiduCslLiveStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduCooperationJob"/>
+        <property name="targetMethod" value="baiduLiveMatch"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduCslLiveStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduCslLiveStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>25 * * * * ?</value>
+        </property>
+    </bean>
+
+
+
+    <!-- 百度 亚冠Pc
+    <bean id="baiduAfcclStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="baiduAfcclStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduAfcclStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduAfcclStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>23 4/5 * * * ?</value>
+        </property>
+    </bean>-->
+
+    <!-- 百度 移动直播-->
+    <bean id="baiduWiseLiveStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduWiseCooperationJob"/>
+        <property name="targetMethod" value="baiduWiseLiveStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduWiseLiveCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduWiseLiveStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>33 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 移动集锦-->
+    <bean id="baiduWiseHighlightsStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduWiseCooperationJob"/>
+        <property name="targetMethod" value="baiduWiseHighlightsStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduWiseHighlightsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduWiseHighlightsStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>33 2/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 百度 移动热门-->
+    <bean id="baiduWiseHotStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="baiduWiseCooperationJob"/>
+        <property name="targetMethod" value="baiduWiseHotStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduWiseHotCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduWiseHotStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>33 3/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--     百度合作结束     -->
+
+    <!--     搜狗合作开始     -->
+    <!-- 搜狗 12强 pc -->
+    <bean id="sogouTop12PcSerieaStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="sogouTop12PcStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouTop12PcStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouTop12PcSerieaStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>10 0/3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗 12强 移动   -->
+    <bean id="sogouTop12MobSerieaStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="sogouTop12MobStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouTop12MobStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouTop12MobSerieaStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>20 0/3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗 12强 射手榜  -->
+    <bean id="sogouTop12ScorerSerieaStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="sogouTop12ScorerStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouTop12ScorerStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouTop12ScorerSerieaStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>30 0/3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗中超赛程  -->
+    <bean id="sogouCslScheduleStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="sogouCslScheduleStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouCslScheduleStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouCslScheduleStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>30 5/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗中超积分榜  -->
+    <bean id="sogouCslScoreStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="sogouCslScoreStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouCslScoreStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouCslScoreStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>30 5/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗中超射手榜  -->
+    <bean id="sogouCslShotStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="sogouCslShotStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouCslShotStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouCslShotStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>30 5/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  搜狗移动端  -->
+    <bean id="sogouCslStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="sogouCslStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogouCslStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogouCslStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>30 5/10 * * * ?</value>
+        </property>
+    </bean>
+    <!--     搜狗合作结束     -->
+
+    <!--     360 合作开始     -->
+    <!--  360 12强 pc  -->
+    <bean id="oneboxTop12PcStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="oneboxPcStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxTop12PcStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxTop12PcStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>40 0/3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  360 12强 移动  -->
+    <bean id="oneboxTop12MobStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="oneboxMobStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxTop12MobStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxTop12MobStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>50 0/3 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--  360中超   -->
+    <bean id="oneboxCslStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxCslStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxCslStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxCslStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>10 5/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360奥运新闻 -->
+    <bean id="olyNews360JobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="olyCooperationJob"/>
+        <property name="targetMethod" value="olyNews360"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="olyNews360CronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="olyNews360JobDetail"/>
+        <property name="cronExpression">
+            <value>50 0/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 s6 -->
+    <bean id="oneboxS6StatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxS6Stats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxS6StatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxS6StatsJobDetail"/>
+        <property name="cronExpression">
+            <value>55 0/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 top12 -->
+    <bean id="oneboxTop12SingleStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12CooperationJob"/>
+        <property name="targetMethod" value="oneboxSingleStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxTop12SingleStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxTop12SingleStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>55 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 epl -->
+    <bean id="oneboxEplStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxEplStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxEplStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxEplStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>55 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 seriea -->
+    <bean id="oneboxSerieaStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxSerieaStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxSerieaStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxSerieaStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>55 1/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 afccl pc -->
+    <bean id="oneboxAfcclStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxAfcclStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxAfcclStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxAfcclStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>3 4/5 * * * ?</value>
+        </property>
+    </bean>
+
+    <!-- 360 afccl mob -->
+    <bean id="oneboxAfcclMobStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="aladCooperationJob"/>
+        <property name="targetMethod" value="oneboxAfcclMobStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="oneboxAfcclMobStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="oneboxAfcclMobStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>13 4/5 * * * ?</value>
+        </property>
+    </bean>
+    <!--     360 合作结束     -->
+
+    <!--     其他第三方合作开始     -->
+    <!-- 神马搜索奥运 -->
+    <bean id="smOlyJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="olyCooperationJob"/>
+        <property name="targetMethod" value="olySmUpdate"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="smOlyCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="smOlyJobDetail"/>
+        <property name="cronExpression">
+            <value>45 0/5 * * * ?</value>
+        </property>
+    </bean>
+    <!--     其他第三方合作结束     -->
+
+    <!--美洲杯对外合作-->
+    <!--<bean id="sogoScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="sogoSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="sogoScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="sogoScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="threeBoxScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="threeBoxSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="threeBoxScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="threeBoxScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="threeBoxMobileScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="threeBoxMobileSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="threeBoxMobileScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="threeBoxMobileScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduPCScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduPCSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduPCScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduPCScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduPCAganistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduPCAganist"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduPCAganistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduPCAganistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduPCTeamAganistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduPCTeamAganist"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduPCTeamAganistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduPCTeamAganistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileSchedule"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileAganistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileAganist"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileAganistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileAganistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileTeamAganistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileTeamAganist"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileTeamAganistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileTeamAganistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/10 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileTeamRankingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileTeamRanking"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileTeamRankingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileTeamRankingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobilePlayerRankingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobilePlayerRanking"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobilePlayerRankingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobilePlayerRankingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileLiveVedioJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileLiveVedio"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileLiveVedioCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileLiveVedioJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/5 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileLiveSquadJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileLiveSquad"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileLiveSquadCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileLiveSquadJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileLiveStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileLiveStats"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileLiveStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileLiveStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="baiduMobileLiveEventJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="copaAmericanCooperationJob"/>
+        <property name="targetMethod" value="baiduMobileLiveEvent"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="baiduMobileLiveEventCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="baiduMobileLiveEventJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>-->
+    <!-- copa American ended -->
+
+
+    <bean id="schedulerFactory"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--  百度合作开始  -->
+                <ref bean="baiduSearchUpadateCronTrigger"/>
+                <ref bean="baiduSearchHotCronTrigger"/>
+
+                <ref bean="baiduVideoCslCompetitionCronTrigger"/>
+                <ref bean="baiduVideoCslTeamCronTrigger"/>
+                <ref bean="baiduAlbumStatsCronTrigger"/>
+                <ref bean="baiduAlbumItemStatsCronTrigger"/>
+                <ref bean="baiduCslLiveStatsCronTrigger"/>
+
+                <!--  百度合作结束 -->
+
+                <!--  alad开始  -->
+                <ref bean="oneboxCslStatsCronTrigger"/>
+                <ref bean="baiduMLBStatsCronTrigger"/>
+                <ref bean="baiduCslStatsCronTrigger"/>
+                <ref bean="baiduEplStatsCronTrigger"/>
+                <ref bean="baiduSerieaStatsCronTrigger"/>
+                <ref bean="baiduNflPcStatsCronTrigger"/>
+                <ref bean="baiduNflMobStatsCronTrigger"/>
+                <ref bean="oneboxS6StatsCronTrigger"/>
+                <ref bean="oneboxEplStatsCronTrigger"/>
+                <ref bean="oneboxSerieaStatsCronTrigger"/>
+
+                <!--<ref bean="sogouCslScheduleStatsCronTrigger"/>
+                <ref bean="sogouCslScoreStatsCronTrigger"/>
+                <ref bean="sogouCslShotStatsCronTrigger"/>
+                <ref bean="sogouCslStatsCronTrigger"/>-->
+                <!--  alad结束  -->
+
+                <!--  12强开始  -->
+                <ref bean="baiduTop12AganistCronTrigger"/>
+                <ref bean="baiduTop12SimpleScheduleCronTrigger"/>
+                <ref bean="baiduTop12ScheduleCronTrigger"/>
+                <ref bean="baiduTop12PcStatsCronTrigger"/>
+                <ref bean="baiduTop12VideoStatsCronTrigger"/>
+                <ref bean="sogouTop12PcStatsCronTrigger"/>
+                <ref bean="sogouTop12MobStatsCronTrigger"/>
+                <ref bean="sogouTop12ScorerStatsCronTrigger"/>
+                <ref bean="oneboxTop12PcStatsCronTrigger"/>
+                <ref bean="oneboxTop12MobStatsCronTrigger"/>
+                <ref bean="oneboxTop12SingleStatsCronTrigger" />
+                <!--  12强结束  -->
+
+
+                <!--  baidu wise 开始  -->
+                <ref bean="baiduWiseLiveCronTrigger" />
+                <ref bean="baiduWiseHighlightsCronTrigger" />
+                <ref bean="baiduWiseHotCronTrigger" />
+                <!--  baidu wise 结束  -->
+
+                <!--  亚冠开始  -->
+                <!--<ref bean="oneboxAfcclStatsCronTrigger"/>
+                <ref bean="oneboxAfcclMobStatsCronTrigger"/>
+                <ref bean="baiduAfcclStatsCronTrigger"/>
+                <ref bean="baiduAfcclLiveStatsCronTrigger"/>
+                <ref bean="baiduAfcclHighlightsStatsCronTrigger"/>
+                <ref bean="baiduAfcclHotCronTrigger"/> -->
+                <!--  亚冠结束  -->
+
+                <!--  奥运开始  -->
+                <!--<ref bean="baiduSearchOlyCronTrigger"/>
+                <ref bean="smOlyCronTrigger"/>
+                <ref bean="olyNews360CronTrigger"/>-->
+                <!--  奥运结束  -->
+
+                <!--  copaAmerican开始  -->
+                <!--<ref bean="sogoScheduleCronTrigger"/><-->
+                <!--<ref bean="threeBoxScheduleCronTrigger"/>-->
+                <!--<ref bean="threeBoxMobileScheduleCronTrigger"/>-->
+                <!--<ref bean="baiduMobileScheduleCronTrigger"/>-->
+                <!--<ref bean="baiduMobileAganistCronTrigger"/>-->
+                <!--<ref bean="baiduMobileTeamAganistCronTrigger"/>-->
+                <!--<ref bean="baiduMobilePlayerRankingCronTrigger"/>-->
+                <!--<ref bean="baiduMobileTeamRankingCronTrigger"/>-->
+                <!--<ref bean="baiduMobileLiveEventCronTrigger"/>-->
+                <!--<ref bean="baiduMobileLiveSquadCronTrigger"/>-->
+                <!--<ref bean="baiduMobileLiveStatsCronTrigger"/>-->
+                <!--<ref bean="baiduMobileLiveVedioCronTrigger"/>-->
+                <!--<ref bean="baiduPCAganistCronTrigger"/>-->
+                <!--<ref bean="baiduPCTeamAganistCronTrigger"/>-->
+                <!--<ref bean="baiduPCScheduleCronTrigger"/>-->
+                <!--  alad结束  -->
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">DefaultQuartzScheduler</prop>
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">200</prop>
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="baiduCooperationJob" class="com.lesports.sms.cooperation.job.BaiduCooperationJob"/>
+    <bean id="baiduWiseCooperationJob" class="com.lesports.sms.cooperation.job.BaiduWiseCooperationJob"/>
+    <bean id="aladCooperationJob" class="com.lesports.sms.cooperation.job.AladCooperationJob"/>
+    <bean id="olyCooperationJob" class="com.lesports.sms.cooperation.job.OlyCooperationJob"/>
+    <bean id="copaAmericanCooperationJob" class="com.lesports.sms.cooperation.job.CopaAmericanCooperationJob"/>
+    <bean id="top12CooperationJob" class="com.lesports.sms.cooperation.job.Top12CooperationJob"/>
+</beans>

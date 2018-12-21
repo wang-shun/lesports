@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>Demo Chat</title>
+
+    <link href="bootstrap.css" rel="stylesheet">
+
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        #console {
+            height: 400px;
+            overflow: auto;
+        }
+
+        .username-msg {
+            color: orange;
+        }
+
+        .connect-msg {
+            color: green;
+        }
+
+        .disconnect-msg {
+            color: red;
+        }
+
+        .send-msg {
+            color: #888
+        }
+    </style>
+
+
+    <script src="js/socket.io/socket.io.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+    <script>
+        var roomId = "1004760003";
+        var tliveId = 3094032;
+        var userName = 'user' + Math.floor((Math.random() * 1000) + 1);
+
+                var socket = io.connect('http://localhost:9693/tlive');
+//        var socket = io.connect('http://staging.api.lesports.com/tlive');
+
+        socket.on('connect', function () {
+            output('<span class="connect-msg">Client has connected to the server!</span>');
+        });
+
+        socket.on('disconnect', function () {
+            output('<span class="disconnect-msg">The client has disconnected!</span>');
+        });
+
+        socket.on('JOIN', function (data) {
+            output('<span class="username-msg">' + data.roomId + ':</span> ' + JSON.stringify(data.data));
+        });
+
+        socket.on('LEAVE', function (data) {
+            output('<span class="username-msg">' + data.roomId + ':</span> ' + JSON.stringify(data.data));
+        });
+
+        socket.on('LIVE_ROOM_INFO', function (data) {
+            output('<span class="username-msg">' + data.roomId + ':</span> ' + JSON.stringify(data.data));
+        });
+
+        socket.on('LATEST_INDEX', function (data) {
+            output('<span class="username-msg">' + ':</span> ' + JSON.stringify(data));
+        });
+
+        socket.on('LATEST_MESSAGE', function (data) {
+            output('<span class="username-msg">' + ':</span> ' + JSON.stringify(data));
+        });
+
+        socket.on('LATEST_PAGE', function (data) {
+            output('<span class="username-msg">' + ':</span> ' + JSON.stringify(data));
+        });
+
+        socket.on('PAGE_CONTENT', function (data) {
+            output('<span class="username-msg">' + ':</span> ' + JSON.stringify(data));
+        });
+
+        function sendDisconnect() {
+            socket.disconnect();
+        }
+
+        function joinRoom() {
+//            var message = $('#msg').val();
+//            $('#msg').val('');
+
+            var jsonObject = {roomId: roomId};
+            socket.emit('JOIN', jsonObject);
+        }
+
+        function leaveRoom() {
+//            var message = $('#msg').val();
+//            $('#msg').val('');
+
+            var jsonObject = {roomId: roomId};
+            socket.emit('LEAVE', jsonObject);
+        }
+
+        function online() {
+            var jsonObject = {roomId: roomId};
+            socket.emit('LIVE_ROOM_INFO', jsonObject);
+        }
+
+        function latestIndex() {
+            var jsonObject = {tliveId: tliveId};
+            socket.emit('LATEST_INDEX', jsonObject);
+        }
+
+        function latestMessage() {
+            var jsonObject = {tliveId: tliveId};
+            socket.emit('LATEST_MESSAGE', jsonObject);
+        }
+
+        function latestPage() {
+            var jsonObject = {tliveId: tliveId};
+            socket.emit('LATEST_PAGE', jsonObject);
+        }
+
+        function pageContent() {
+            var jsonObject = {tliveId: tliveId, "page":1};
+            socket.emit('PAGE_CONTENT', jsonObject);
+        }
+
+        function sendEvent() {
+            var event = $('#event').val();
+            $('#event').val('');
+
+            var message = $('#msg').val();
+            $('#msg').val('');
+
+            var jsonObject = eval("(" + message + ")");
+            //var jsonObject = {roomId: userName, data: message};
+            socket.emit(event, jsonObject);
+        }
+
+        function output(message) {
+            var currentTime = "<span class='time'>" + moment().format('HH:mm:ss.SSS') + "</span>";
+            var element = $("<div>" + currentTime + " " + message + "</div>");
+            $('#console').prepend(element);
+        }
+
+        $(document).keydown(function (e) {
+            if (e.keyCode == 13) {
+                $('#send').click();
+            }
+        });
+    </script>
+</head>
+
+<body>
+
+<h1>Netty-socketio Demo Chat</h1>
+
+<br/>
+
+<div id="console" class="well">
+</div>
+
+<form class="well form-inline" onsubmit="return false;">
+    <input id="msg" class="input-xlarge" type="text" placeholder="Type something..."/>
+    <input id="event" class="input-xlarge" type="text" placeholder="Type Event..."/>
+    <button type="button" onClick="sendEvent()" class="btn">sendEvent</button>
+<p>
+    <button type="button" onClick="joinRoom()" class="btn" >joinRoom</button>
+    <button type="button" onClick="leaveRoom()" class="btn" >leaveRoom</button>
+    <button type="button" onClick="online()" class="btn">online</button>
+    <button type="button" onClick="latestIndex()" class="btn">latestIndex</button>
+    <button type="button" onClick="latestMessage()" class="btn">latestMessage</button>
+    <button type="button" onClick="latestPage()" class="btn" >latestPage</button>
+    <button type="button" onClick="pageContent()" class="btn">pageContent</button>
+
+</form>
+
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+        <relativePath>../../../../lesports-projects/trunk/lesports-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.lesports.bole</groupId>
+    <artifactId>lesports-bole-api-service</artifactId>
+    <packaging>jar</packaging>
+    <name>lesports-bole-api-service</name>
+    <description>Lesports Bole Service</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.lesports.bole</groupId>
+            <artifactId>lesports-bole-core-impl</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lesports.msg</groupId>
+            <artifactId>lesports-msg-producer</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lesports.bole</groupId>
+            <artifactId>lesports-bole-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.ellios</groupId>
+            <artifactId>hedwig-redis-client</artifactId>
+            <version>${hedwig.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lesports.id</groupId>
+            <artifactId>lesports-id-api-client</artifactId>
+            <version>${project.parent.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>netty</artifactId>
+                    <groupId>io.netty</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+
+    </dependencies>
+</project>

@@ -1,0 +1,150 @@
+<h3>赛事浏览</h3>
+<div ng-controller="CompetitionViewCtrl as cvc" class="container-fluid">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">赛事详情</div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-2">ID</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.id" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">名称</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.name" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">别名</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.abbreviation" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">状态</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.status" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">来源URL</label>
+                        <div class="col-lg-10">
+                            <a target="_blank" ng-href="{{sourceUrl}}">{{sourceUrl}}</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">SMS_ID</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.smsId" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">创建时间</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.createAt" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2">更新时间</label>
+                        <div class="col-lg-10">
+                            <input class="form-control" ng-model="competition.updateAt" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    赛事关联<span class="help-block">对新建状态有效，关联SMS后将该新建的赛事置为无效</span>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <tags-input ng-model="cvc.tags" display-property="name" key-property="id" placeholder="赛事名称" replace-spaces-with-dashes="false" add-from-autocomplete-only="true">
+                                    <auto-complete source="loadCompetitions($query)" min-length="0" load-on-focus="true" load-on-empty="false" debounce-delay="300"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-2">
+                                <button class="btn btn-m btn-info" ng-click="cvc.attachSms()">关联SMS</button>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-m btn-info" ng-click="cvc.cancelAttachSms()">取消关联</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    状态修改<span class="help-block">如确认SMS中无此赛事，请点击“确认”，否则请进行关联操作。如为无效数据，请点击“无效”。“恢复”会将经过“确认”或“无效”操作的赛事恢复为新建状态。</span>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-3">
+                                <!-- <button class="btn btn-m btn-info" ng-click="cvc.updateStatus(2)">确认</button> -->
+                                <button class="btn btn-m btn-info" ng-click="cvc.openExport()">确认</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-m btn-danger" ng-click="cvc.updateStatus(3)">无效</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-m btn-danger" ng-click="cvc.updateStatus(1)">恢复</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    输出该赛事直播时的排序规则，排在输入框前面的优先级高
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                                <tags-input ng-model="cvc.siteOrder" placeholder="请选择" replace-spaces-with-dashes="false" add-from-autocomplete-only="true" min-length="2">
+                                    <auto-complete source="loadSites($query2)" load-on-focus="true" load-on-empty="true" min-length="0" debounce-delay="300" max-results-to-show="100"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-2">
+                                <button class="btn btn-m btn-info" ng-click="cvc.setSiteOrder(false)">确定</button>
+                            </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-m btn-info" ng-click="cvc.setSiteOrder(true)">默认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="exportDialog">
+        <p>有以下不同源的同名赛事，请确认是否一并导出：</p>
+        <div class="form-group" ng-repeat="item in ngDialogData">
+            <div class="checkbox c-checkbox">
+                <label>
+                    <input type="checkbox" ng-model="item.checked" />
+                    <span class="fa fa-check"></span><a href="#/app/competition/view/{{item.id}}" target="_blank">{{item.source}}-{{item.name}}</a>
+                </label>
+            </div>
+        </div>
+        <button type="button" ng-click="confirm()" class="btn btn-sm btn-primary mr">确定</button>
+        <button type="button" ng-click="closeThisDialog()" class="btn btn-sm btn-default">取消</button>
+    </script>
+</div>

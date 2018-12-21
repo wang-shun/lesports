@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+	<mongo:mongo-client id="mongoClient" replica-set="${mongodb.replica.set}">
+		<mongo:client-options connect-timeout="10000"
+			max-wait-time="1500" socket-timeout="1500" max-connection-idle-time="600000"
+			write-concern="SAFE" connections-per-host="80" read-preference="SECONDARY_PREFERRED" />
+	</mongo:mongo-client>
+
+	<mongo:db-factory id="mongoDbFactory" mongo-ref="mongoClient"
+		username="${mongodb.username}" password="${mongodb.password}" />
+
+	<mongo:mapping-converter id="mongoConverter"
+		base-package="com.lesports">
+		<mongo:custom-converters>
+			<mongo:converter>
+				<bean class="com.lesports.converter.CompoundTagReadConverter" />
+			</mongo:converter>
+		</mongo:custom-converters>
+	</mongo:mapping-converter>
+
+	<bean id="noClassMongoConverter"
+		class="com.lesports.mongo.converter.MongoConverterEnhanceFactoryBean">
+		<property name="converter" ref="mongoConverter" />
+	</bean>
+</beans>

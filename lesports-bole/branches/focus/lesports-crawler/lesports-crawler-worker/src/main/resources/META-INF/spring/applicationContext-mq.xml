@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <bean id="crawlerSingleConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="crawlerAmqConnectionFactory"/>
+    </bean>
+
+    <bean id="crawlerAmqConnectionFactory" name="userAmqConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${crawler.swiftq.connection.url}"/>
+    </bean>
+
+    <bean id="produceExchange" name="produceExchange" class="java.lang.String">
+        <constructor-arg index="0" value="lesports.crawler.exchange"/>
+    </bean>
+
+    <bean id="routingKey" name="routingKey" class="java.lang.String">
+        <constructor-arg index="0" value="lesports.crawler.worker"/>
+    </bean>
+
+    <bean id="consumeDestination" name="consumeDestination" class="org.apache.qpid.client.AMQAnyDestination">
+        <constructor-arg index="0" value="ADDR:lesports.crawler.worker.queue; {create: always}"/>
+    </bean>
+
+
+</beans>

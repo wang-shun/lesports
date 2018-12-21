@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+
+    <mongo:mongo-client id="mongo" replica-set="${mongo.bole.replicaset}">
+        <mongo:client-options connect-timeout="10000" max-wait-time="1500" socket-timeout="1500"
+                              max-connection-idle-time="600000" write-concern="SAFE"
+                              connections-per-host="200"
+                              read-preference="NEAREST"/>
+    </mongo:mongo-client>
+
+    <mongo:db-factory id="mongoDbFactory" dbname="${mongo.bole.db}" mongo-ref="mongo"
+                      username="${mongo.bole.username}" password="${mongo.bole.password}"/>
+
+    <mongo:mapping-converter id="mongoConverter" base-package="com.lesports.crawler.model"/>
+
+    <bean id="noClassMongoConverter" class="com.lesports.mongo.converter.MongoConverterEnhanceFactoryBean">
+        <property name="converter" ref="mongoConverter"/>
+    </bean>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongoDbFactory"/>
+        <constructor-arg ref="noClassMongoConverter"/>
+    </bean>
+
+    <mongo:repositories base-package="com.lesports.crawler.model"/>
+</beans>

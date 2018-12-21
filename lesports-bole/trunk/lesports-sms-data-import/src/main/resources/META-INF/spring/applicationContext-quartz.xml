@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+
+    <bean id="moveFileJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="moveFileJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="moveFileCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="moveFileJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 1 * * ?</value>
+        </property>
+    </bean>
+
+    <!--    2016.01.19  种林  ftp服务器上的sportradar公司旧数据文件每周整理    -->
+    <bean id="moveSportradarFileJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="moveSportradarFileJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="moveSportradarFileCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="moveSportradarFileJobDetail"/>
+        <property name="cronExpression">
+            <value>0 30 1 ? * MON</value>
+        </property>
+    </bean>
+
+    <bean id="TeamSeasonJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="teamSeasonFileJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamSeasonCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="TeamSeasonJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 0/6 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="liveScoreDeltaJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="liveScoreJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="arguments">
+            <list>
+                <value>delta</value>
+            </list>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="liveScoreDeltaCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="liveScoreDeltaJobDetail"/>
+        <property name="cronExpression">
+            <value>0/1 * * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="liveScoreFullJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="liveScoreJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="arguments">
+            <list>
+                <value>full</value>
+            </list>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="liveScoreFullCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="liveScoreFullJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */3 * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="matchFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="matchFbJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="matchFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="matchFbJobDetail"/>
+        <property name="cronExpression">
+            <!--<value>0 0 12 * * ?"</value>-->
+            <value>0 */10 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="matchFbDetailJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="matchFbDetailJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="matchFbDetailCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="matchFbDetailJobDetail"/>
+        <property name="cronExpression">
+            <!--<value>0 0 12 * * ?"</value>-->
+            <value>0 */35 * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="playerRandFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="playerFandFbJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerFandFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerRandFbJobDetail"/>
+        <property name="cronExpression">
+            <!--<value>0 0 12 * * ?"</value>-->
+            <value>0 /3 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="playerRankAssistsFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="playerRankAssistsFbJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerRankAssistsFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerRankAssistsFbJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */2 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="teamRankFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="teamRankFbJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamRankFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="teamRankFbJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */10 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="cupFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="cupFbJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="cupFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="cupFbJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */50 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="playerFbJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="playerFbParser"/>
+        <property name="targetMethod" value="parseData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerFbCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerFbJobDetail"/>
+        <property name="cronExpression">
+            <value>0 05 16 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="deleteLiveScoreEmptyFileJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="deleteEmptyFileJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="arguments">
+            <list>
+                <value>livescore</value>
+            </list>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="deleteLiveScoreEmptyFileCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="deleteLiveScoreEmptyFileJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */1 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="deleteSportEmptyFileJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="deleteEmptyFileJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="arguments">
+            <list>
+                <value>sport</value>
+            </list>
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="deleteSportEmptyFileCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="deleteSportEmptyFileJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */30 * * * ?</value>
+        </property>
+    </bean>
+
+
+    <!--Top12 start-->
+
+    <bean id="playerPageJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="playerPageJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerPageCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerPageJobDetail"/>
+        <property name="cronExpression">
+            <value>0 20/30 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="teamPageJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="teamPageJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamPageCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="teamPageJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="playerAssistRankingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12AssistRankingJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerAssistRankingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerAssistRankingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="playerGoalRankingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12GoalRankingJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerGoalRankingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerGoalRankingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/3 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="top12LiveScoreJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="Top12LiveScoreJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="top12LiveScoreCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="top12LiveScoreJobDetail"/>
+        <property name="cronExpression">
+            <value>0/1 * * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="top12ScheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="top12ScheduleJob"/>
+        <property name="targetMethod" value="run"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="top12ScheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="top12ScheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>20 30 * * * ?</value>
+        </property>
+    </bean>
+    <!--Top12 END-->
+
+    <!--stats start *************************************************-->
+    <bean id="getMissedLiveMatchJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importMissesedMatchs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getMissedLiveMatchCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getMissedLiveMatchJobDetail"/>
+        <property name="cronExpression">
+            <value>0 50 18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getTodayLiveMatchJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="getCurrentValidMatchs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getTodayLiveMatchCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getTodayLiveMatchJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */10 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="nbaLiveScoreJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importMatchBoxscoreData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="nbaLiveScoreCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="nbaLiveScoreJobDetail"/>
+        <property name="cronExpression">
+            <value>0/30 * * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="nbaLiveEventJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importMatchPBPEventData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="nbaLiveEventCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="nbaLiveEventJobDetail"/>
+        <property name="cronExpression">
+            <value>0/30 * * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getnbaMatchscheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importMatchScheduleData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaMatchscheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaMatchscheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="getnbaTeamStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importTeamRankingData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaTeamStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaTeamStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 6,13,14,15,17,18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getnbaPlayersStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importPlayerRankingData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaPlayersStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaPlayersStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 6,13,14,15,17,18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getnbaPlayersFullStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importPlayerFullRankingData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaPlayersFullStandingCronTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaPlayersFullStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 6,13,14,15,17,18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getnbaTeamStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importTeamSeasonStatData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaTeamStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaTeamStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 6,13,14,15,17,18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getnbaPlayerStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="importPlayerSeasonStatData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getnbaPlayerStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getnbaPlayerStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 15 6,12,13,14,15,17,18 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="updateTeamAndPlayersJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="nbaMatchLiveDataHandleJob"/>
+        <property name="targetMethod" value="updateTeamAndPlayersData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="updateTeamAndPlayersCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateTeamAndPlayersJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 17 * * ?</value>
+        </property>
+    </bean>
+
+
+    <!--stats end *************************************************-->
+    <!--soda  start ********************************************-->
+
+    <bean id="importSodaMatchJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaMatch"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaMatchCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaMatchJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */30 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaTeamJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaTeam"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaTeamCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaTeamJobDetail"/>
+        <property name="cronExpression">
+            <value>0 06 17 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaConfrontationJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaConfrontation"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaConfrontationCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaConfrontationJobDetail"/>
+        <property name="cronExpression">
+            <value>0 30 1 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaLineupJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaLineup"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaLineupCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaLineupJobDetail"/>
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaRankingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaRanking"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaRankingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaRankingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */15 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaTopPlayerGoalJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaTopPlayerGoalParser"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaTopPlayerGoalCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaTopPlayerGoalJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */15 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--    2016.03.10  种林  每天凌晨2点导入本赛季球队统计    -->
+    <bean id="importSodaTeamKillJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaTeamSkillJob"/>
+        <property name="targetMethod" value="importSodaTeamSkill"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaTeamSkillCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaTeamKillJobDetail"/>
+        <property name="cronExpression">
+            <value>30 5 2 * * ?</value>
+        </property>
+    </bean>
+    <!--    2016.03.10  种林  每天凌晨2点导入本赛季球员统计    -->
+    <bean id="importSodaPlayerKillJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaPlayerSkillJob"/>
+        <property name="targetMethod" value="importSodaPlayerSkill"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaPlayerSkillCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaPlayerKillJobDetail"/>
+        <property name="cronExpression">
+            <value>30 10 12 * * ?</value>
+        </property>
+    </bean>
+
+    <!--    2016.03.28  种林  10秒检查一次soda 比赛结果    -->
+    <bean id="importSodaMatchResultJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaMatchResult"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaMatchResultCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaMatchResultJobDetail"/>
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="importSodaAssistJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaAssistParser"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaAssistCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaAssistJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */15 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="importSodaPlayerJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="sodaDataJob"/>
+        <property name="targetMethod" value="importSodaPlayer"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="importSodaPlayerCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="importSodaPlayerJobDetail"/>
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!--soda end ********************************************-->
+
+    <!--  种林 2016.6.4 euro start *************************************************-->
+
+
+    <bean id="getEuroTodayLiveMatchJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="getEuroCurrentValidMatchs"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getEuroTodayLiveMatchCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getEuroTodayLiveMatchJobDetail"/>
+        <property name="cronExpression">
+            <value>0 */5 * * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="euroLiveScoreJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="importMatchBoxscoreData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="euroLiveScoreCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="euroLiveScoreJobDetail"/>
+        <property name="cronExpression">
+            <value>0/30 * * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="getEuroMatchscheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="importMatchScheduleData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getEuroMatchscheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getEuroMatchscheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 30 0/1 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getEuroTeamStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="importTeamRankingData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getEuroTeamStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getEuroTeamStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 0/1 * * ?</value>
+        </property>
+    </bean>
+
+    <bean id="getEuroPlayersStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="importPlayerRankingData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="getEuroPlayersStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="getEuroPlayersStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 45 0/1 * * ?</value>
+        </property>
+    </bean>
+    <bean id="updateEuroTeamAndPlayersJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="euroDataJob"/>
+        <property name="targetMethod" value="updateTeamAndPlayersData"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="updateEuroTeamAndPlayersCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="updateEuroTeamAndPlayersJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 17 * * ?</value>
+        </property>
+    </bean>
+
+
+    <!--stats end *************************************************-->
+
+    <bean id="schedulerFactory"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">DefaultQuartzScheduler</prop>
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">200</prop>
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="sodaDataJob" class="com.lesports.sms.data.job.SodaDataJob"/>
+    <bean id="sodaTeamSkillJob" class="com.lesports.sms.data.job.SodaTeamSkillJob"/>
+    <bean id="sodaPlayerSkillJob" class="com.lesports.sms.data.job.SodaPlayerSkillJob"/>
+    <bean id="euroDataJob" class="com.lesports.sms.data.job.EuroJob"/>
+
+</beans>

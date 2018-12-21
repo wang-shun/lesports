@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <!--user消费者配置-->
+    <bean id="userSingleConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="userAmqConnectionFactory"/>
+    </bean>
+
+    <bean id="userAmqConnectionFactory" name="userAmqConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${user.swiftq.connection.url}"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="userSingleConnectionFactory"/>
+        <property name="destination">
+            <bean class="org.apache.qpid.client.AMQAnyDestination">
+                <constructor-arg index="0" value="ADDR:${user.swiftq.queue}; {create: always}"/>
+            </bean>
+        </property>
+        <property name="messageListener">
+            <bean class="com.lesports.msg.consumer.UserSyncConsumer"/>
+        </property>
+    </bean>
+
+    <!--sms消费者配置-->
+    <bean id="singleConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="amqConnectionFactory"/>
+    </bean>
+
+    <bean id="amqConnectionFactory" name="amqConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${sms.swiftq.connection.url}"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="beanName" value="SMS_MESSAGE_LISTENER"/>
+        <property name="connectionFactory" ref="singleConnectionFactory"/>
+        <property name="destination">
+            <bean class="org.apache.qpid.client.AMQAnyDestination">
+                <constructor-arg index="0" value="ADDR:lesports.sms.sync; {create: always}"/>
+            </bean>
+        </property>
+        <property name="messageListener">
+            <bean class="com.lesports.msg.consumer.SmsSyncConsumer"/>
+        </property>
+        <property name="concurrentConsumers" value="100"/>
+    </bean>
+
+    <!--直播消息消费者配置-->
+    <bean id="liveConnectionFactory" name="liveConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${live.swiftq.connection.url}"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="beanName" value="LETV_LIVE_MESSAGE_LISTENER"/>
+        <property name="connectionFactory" ref="liveConnectionFactory"/>
+        <property name="destination">
+            <bean class="org.apache.qpid.client.AMQAnyDestination">
+                <constructor-arg index="0" value="ADDR:lesports.center.epg.queue.live"/>
+            </bean>
+        </property>
+        <property name="messageListener">
+            <bean class="com.lesports.msg.consumer.LiveMessageConsumer"/>
+        </property>
+        <property name="concurrentConsumers" value="20"/>
+    </bean>
+
+    <!--媒资swiftq消息-->
+    <bean id="mmsConnectionFactory" name="mmsConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${mms.swiftq.connection.url}"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="beanName" value="LETV_MMS_MESSAGE_LISTENER"/>
+        <property name="connectionFactory" ref="mmsConnectionFactory"/>
+        <property name="destination">
+            <bean class="org.apache.qpid.client.AMQAnyDestination">
+                <constructor-arg index="0" value="ADDR:lesports.sport.mms.queue"/>
+            </bean>
+        </property>
+        <property name="messageListener">
+            <bean class="com.lesports.msg.consumer.BjMmsMessageConsumer"/>
+        </property>
+        <property name="concurrentConsumers" value="100"/>
+    </bean>
+
+    <!--媒资香港swiftq消息-->
+    <bean id="hkmmsConnectionFactory" name="hkmmsConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">
+        <constructor-arg index="0" value="${hk.mms.swiftq.connection.url}"/>
+    </bean>
+
+    <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="beanName" value="LETV_MMS_HK_MESSAGE_LISTENER"/>
+        <property name="connectionFactory" ref="hkmmsConnectionFactory"/>
+        <property name="destination">
+            <bean class="org.apache.qpid.client.AMQAnyDestination">
+                <constructor-arg index="0" value="ADDR:letv.mms.fanout.sport.queue.hk"/>
+            </bean>
+        </property>
+        <property name="messageListener">
+            <bean class="com.lesports.msg.consumer.HkMmsMessageConsumer"/>
+        </property>
+        <property name="concurrentConsumers" value="100"/>
+    </bean>
+
+    <!--超级手机用户订阅-->
+    <!--<bean id="userConnectionFactory" class="org.apache.qpid.client.AMQConnectionFactory">-->
+    <!--<constructor-arg index="0" value="${user.subscribe.swiftq.connection.url}"/>-->
+    <!--</bean>-->
+
+    <!--<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+    <!--<property name="connectionFactory" ref="userConnectionFactory"/>-->
+    <!--<property name="destination">-->
+    <!--<bean class="org.apache.qpid.client.AMQAnyDestination">-->
+    <!--<constructor-arg index="0" value="ADDR:lesports.user.subscribe; {create: always}"/>-->
+    <!--</bean>-->
+    <!--</property>-->
+    <!--<property name="messageListener">-->
+    <!--<bean class="com.lesports.msg.consumer.UserSubscribeConsumer"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+</beans>

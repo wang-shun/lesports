@@ -1,0 +1,28 @@
+{
+  "name": "bole-admin",
+  "version": "0.0.1",
+  "description": "bole-admin",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/zhangtao07/fis3-angular-demo.git"
+  },
+  "keywords": [
+    "angular",
+    "fis",
+    "fis3"
+  ],
+  "dependencies": {
+    "fis3-hook-module": "*",
+    "fis3-preprocessor-replace": "*",
+    "fis3-postpackager-loader": "*",
+    "fis3-parser-sass": "*",
+    "node-sass": "*",
+    "fis-preprocessor-annotate": "*"
+  },
+  "author": "ellios",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhangtao07/fis3-angular-demo/issues"
+  },
+  "homepage": "http://fis.baidu.com"
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <!--赛程-->
+    <bean id="scheduleJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultScheduleGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="scheduleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="scheduleJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 6 * * ?</value>
+        </property>
+    </bean>
+
+
+    <!---->
+    <bean id="liveScoreJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultLiveScoreGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="liveScoreCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="liveScoreJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0/30 * * * ?</value>
+        </property>
+    </bean>
+
+    <!--球队阵容-->
+    <bean id="teamSeasonJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultTeamSeasonGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamSeasonCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="teamSeasonJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 6 * * ?</value>
+        </property>
+    </bean>
+
+    <!--球队榜单-->
+    <bean id="teamStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultTeamStandingGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="teamStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 18,6 * * ?</value>
+        </property>
+    </bean>
+
+    <!--球队赛季技术统计-->
+    <bean id="teamCompetitionStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultTeamStatsGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="teamCompetitionStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="teamCompetitionStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 18,6 * * ?</value>
+        </property>
+    </bean>
+
+    <!--球员榜单-->
+    <bean id="playerStandingJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultPlayerStandingGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerStandingCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerStandingJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 18,6 * * ?</value>
+        </property>
+    </bean>
+
+    <!--球员赛季技术统计-->
+    <bean id="playerCompetitionStatsJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="defaultPlayerStatsGenerator"/>
+        <property name="targetMethod" value="nextProcessor"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="playerCompetitionStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="playerCompetitionStatsJobDetail"/>
+        <property name="cronExpression">
+            <value>0 0 18,6 * * ?</value>
+        </property>
+    </bean>
+
+    <!--球员职业生涯技术统计-->
+    <!--<bean id="PlayerCareerStatsJobDetail"-->
+    <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+    <!--<property name="targetObject" ref="schedule"/>-->
+    <!--<property name="targetMethod" value="nextProcessor"/>-->
+    <!--<property name="concurrent" value="false"/>-->
+    <!--</bean>-->
+    <!--<bean id="PlayerCareerStatsCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+    <!--<property name="jobDetail" ref="PlayerCareerStatsJobDetail"/>-->
+    <!--<property name="cronExpression">-->
+    <!--<value>0 0 1 * * ?</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="schedulerFactory"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="scheduleCronTrigger"/>
+                <ref bean="liveScoreCronTrigger"/>
+                <ref bean="teamSeasonCronTrigger"/>
+                <ref bean="teamStandingCronTrigger"/>
+                <ref bean="teamCompetitionStatsCronTrigger"/>
+                <ref bean="playerStandingCronTrigger"/>
+                <ref bean="playerCompetitionStatsCronTrigger"/>
+                <!--<ref bean="PlayerCareerStatsCronTrigger"/>-->
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">DefaultQuartzScheduler</prop>
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">200</prop>
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+            </props>
+        </property>
+    </bean>
+    <!--<bean id="sodaDataJob" class="com.lesports.sms.data.Generator.SodaDataJob"/>-->
+    <!--<bean id="sodaTeamSkillJob" class="com.lesports.sms.data.Generator.SodaTeamSkillJob"/>-->
+    <!--<bean id="sodaPlayerSkillJob" class="com.lesports.sms.data.Generator.SodaPlayerSkillJob"/>-->
+    <!--<bean id="euroDataJob" class="com.lesports.sms.data.Generator.EuroJob"/>-->
+
+</beans>

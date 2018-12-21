@@ -1,0 +1,6 @@
+connection:
+    num: 1000
+#    path: http://staging.api.lesports.com/tlive
+    path: http://10.112.36.219:9693/tlive
+
+

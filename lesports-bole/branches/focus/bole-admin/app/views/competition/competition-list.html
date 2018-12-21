@@ -1,0 +1,48 @@
+<h3>赛事
+    <small>赛事列表</small>
+</h3>
+<div ng-controller="CompetitionCtrl as competitions" class="container-fluid">
+
+    <!-- start query panel-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" placeholder="ID/名称" class="form-control" ng-model="competitions.search_q"/>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" ng-model="competitions.search_status"
+                            ng-options="status.id as status.name for status in competitions.statusList">
+                        <option value="">选择数据状态</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" ng-click="competitions.search()">模糊查找</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end  querypanel-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button ng-click="competitions.tableParams.reload()" class="pull-right btn btn-purple btn-sm">重新加载</button>
+            <div class="panel-title">赛事</div>
+        </div>
+        <table ng-table="competitions.tableParams" class="table table-bordered table-striped">
+            <tbody>
+            <tr ng-repeat="item in $data">
+                <td data-title="'ID'">{{item.id}}</td>
+                <td data-title="'名称'">{{item.name}}</td>
+                <td data-title="'状态'">{{competitions.getStatusName(item.status)}}</td>
+                <td data-title="'更新日期'">{{item.updateAt | moment_yyyymmddhhmmss : 'format' : 'YYYY-MM-DD HH:mm:ss'}}</td>
+                <td data-title="'操作'">
+                    <button type="button" ng-click="competitions.view(item.id)" class="btn btn-sm btn-info">
+                        <em class="fa fa-eye"></em>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+    <!-- 头条视频 csl -->
+    <bean id="toutiaoCslVideoJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="toutiaoVideoJob"/>
+        <property name="targetMethod" value="toutiaoCslVideo"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="toutiaoCslVideoCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="toutiaoCslVideoJobDetail"/>
+        <property name="cronExpression">
+            <value>0 5/30 * * * ?</value>
+        </property>
+    </bean>
+
+
+    <bean id="toutiaoTop12VideoJobDetail"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="toutiaoVideoJob"/>
+        <property name="targetMethod" value="toutiaoTop12Video"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="toutiaoTop12VideoCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="toutiaoTop12VideoJobDetail"/>
+        <property name="cronExpression">
+            <value>0 22/30 * * * ?</value>
+        </property>
+    </bean>
+    <!-- 头条视频 -->
+
+    <bean id="schedulerFactory"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--  头条视频下载开始  -->
+                <ref bean="toutiaoCslVideoCronTrigger"/>
+                <ref bean="toutiaoTop12VideoCronTrigger"/>
+                <!--  头条视频下载结束 -->
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceName">DefaultQuartzScheduler</prop>
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">200</prop>
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="toutiaoVideoJob" class="com.lesports.sms.download.job.ToutiaoVideoJob"/>
+</beans>

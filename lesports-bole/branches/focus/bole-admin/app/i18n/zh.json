@@ -1,0 +1,34 @@
+{
+    "dashboard": {
+        "WELCOME": ""
+    },
+    "topbar": {
+        "search": {
+            "PLACEHOLDER": "Type and hit enter.."
+        }
+    },
+    "sidebar": {
+        "WELCOME": "Welcome",
+        "heading": {
+            "HEADER": "导航"
+        },
+        "nav": {
+            "data": {
+                "DATA": "数据管理",
+                "competition": "赛事管理",
+                "competitor": "对阵双方管理",
+                "match": "赛程管理",
+                "importfile": "接入文件管理"
+            },
+            "crawler": {
+                "CRAWLER": "爬虫管理",
+                "source": "来源管理",
+                "config": "配置管理"
+            },
+            "olympics": {
+                "OLYMPICS": "奥运管理",
+                "config": "配置管理"
+            }
+        }
+    }
+}

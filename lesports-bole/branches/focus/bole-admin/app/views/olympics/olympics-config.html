@@ -1,0 +1,203 @@
+<h3>直播数据动态配置
+    <small>配置列表</small>
+</h3>
+<div ng-controller="ConfigCtrl as configs" class="container-fluid">
+
+    <!-- start query panel-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <select ng-change="configs.searchDiscipline()" class="form-control" ng-model="configs.gameFtype_id"
+                            ng-options="dicts.id as dicts.name for dicts in configs.gameFtypeList">
+                        <option value="">选择大项</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select ng-change="configs.searchgameSType()" class="form-control" ng-model="configs.discipline_id"
+                            ng-options="dicts.id as dicts.name for dicts in configs.disciplineList">
+                        <option value="">选择分项</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" ng-model="configs.gameStype_id"
+                            ng-options="dicts.id as dicts.name for dicts in configs.gameStypeList">
+                        <option value="">选择小项</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" ng-model="configs.type"
+                            ng-options="status.type as status.name for status in configs.configTypeList">
+                        <option value="">选择配置类型</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" ng-click="configs.search()">查看配置</button>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" ng-model="configs.copyStype_id"
+                            ng-options="dicts.id as dicts.name for dicts in configs.gameStypeList">
+                        <option value="">导入该配置到当前</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" ng-click="configs.copy()">导入</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end  querypanel-->
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button ng-click="configs.clickToOpen()" class="pull-right btn btn-info btn-sm">添加配置</button>
+            <button ng-click="configs.clickOpOpen()" class="pull-right btn btn-warning btn-sm">添加公式</button>
+            <div class="panel-title">配置</div>
+        </div>
+        <table ng-table="configs.tableParams" class="table table-bordered table-striped">
+            <tbody>
+            <tr ng-repeat="item in $data">
+                <td data-title="'路径公式'"><label
+                        ng-click="configs.findPath(item.elementPath,item.op,item.rightElementPath)">查看完整路径</label>
+                </td>
+                <td data-title="'属性名'">{{item.positionKey}}</td>
+                <td data-title="'重命名'">{{item.attributeReName}}</td>
+                <td data-title="'转换函数'">{{item.formatterType}}</td>
+                <td data-title="'操作'">
+                    <button type="button"
+                            ng-click="configs.clickOpOpen(item.elementPath,item.op,item.rightElementPath,item.positionKey,item.attributeReName,item.formatterType)"
+                            class="btn btn-sm btn-info">更新配置
+                    </button>
+                    <button type="button" ng-click="configs.delete(item.positionKey)" class="btn btn-sm btn-danger">
+                        删除配置
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/ng-template" id="templateId">
+    <div class="container-fluid">
+        <div class="panel border: none">
+            <div class="panel-heading">添加配置</div>
+            <form class="form-horizontal">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-lg-3">条件属性</label>
+
+                        <div class="col-lg-5">
+                            <select class="form-control" ng-model="condition_name"
+                                    ng-options="item for item in condition_list ">
+                                <option>选择属性</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">当前属性</label>
+
+                        <div class="col-lg-5">
+                            <select class="form-control" ng-model="attribute_name"
+                                    ng-options="item for item in attribute_list ">
+                                <option>选择属性</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3">属性注解</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="注解名" class="form-control" ng-model="annotation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">取值类型</label>
+
+                        <div class="col-lg-5">
+                            <select class="form-control" ng-model="formatter_type"
+                                    ng-options="status.type as status.name for status in formatter_list ">
+                                <option value="">选择值类型</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-info" ng-click="saveConfig()">保存</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-default" ng-click="closeThisDialog()">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="templateOpId">
+    <div class="container-fluid">
+        <div class="panel border: none">
+            <div class="panel-heading">路径配置</div>
+            <form class="form-horizontal">
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <label class="col-lg-3">左操作数地址</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="输入地址" class="form-control" ng-model="element_path">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">右操作数地址</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="输入地址" class="form-control" ng-model="right_element_path">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">属性名</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="属性名" class="form-control" ng-model="code">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">注解名</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="注解名" class="form-control" ng-model="annotation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">操作符号</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="+-*//Other" class="form-control" ng-model="op">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3">取值类型</label>
+
+                        <div class="col-lg-5">
+                            <input type="text" placeholder="+-*//Other" class="form-control" ng-model="formatter_type">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-info" ng-click="saveConfig1()">保存</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-default" ng-click="closeThisDialog()">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

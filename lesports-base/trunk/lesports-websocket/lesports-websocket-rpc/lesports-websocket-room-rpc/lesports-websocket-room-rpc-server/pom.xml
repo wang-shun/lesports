@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.lesports.websocket</groupId>
+    <artifactId>lesports-websocket-room-rpc-server</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <environment.group></environment.group>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment.name>dev</environment.name>
+                <environment.type>dev</environment.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <environment.name>test</environment.name>
+                <environment.type>test</environment.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>cn1</id>
+            <properties>
+                <environment.name>cn1</environment.name>
+                <environment.type>prod</environment.type>
+                <environment.group>cn1</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <environment.name>staging</environment.name>
+                <environment.type>staging</environment.type>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}-${environment.name}-${project.version}</finalName>
+        <filters>
+            <filter>src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+        </filters>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.lesorts.sms.server.TextLiveServer</mainClass>
+                        </manifest>
+                    </archive>
+                    <filters>
+                        <filter>${project.basedir}/src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+                    </filters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.lesports</groupId>
+                <artifactId>lesports-build-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.lesports.websocket</groupId>
+            <artifactId>lesports-websocket-room-rpc-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.ellios</groupId>
+            <artifactId>hedwig-server</artifactId>
+            <version>${hedwig.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lesports</groupId>
+            <artifactId>lesports-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.ellios</groupId>
+            <artifactId>hedwig-redis-client</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

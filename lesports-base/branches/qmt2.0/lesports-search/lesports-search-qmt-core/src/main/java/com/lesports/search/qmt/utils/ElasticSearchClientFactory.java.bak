@@ -1,0 +1,40 @@
+/**
+ * 
+ */
+package com.lesports.bole.utils;
+
+import java.net.InetAddress;
+
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.springframework.beans.factory.FactoryBean;
+
+/**
+ * @author sunyue7
+ *
+ */
+public class ElasticSearchClientFactory implements FactoryBean<Client> {
+
+	@Override
+	public Client getObject() throws Exception {
+		Settings settings = Settings.builder().put("cluster.name", "elasticsearch32").build();
+		@SuppressWarnings("resource")
+		TransportClient client = new PreBuiltTransportClient(settings)
+				.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("10.11.145.32"), 9300));
+		return client;
+	}
+
+	@Override
+	public Class<?> getObjectType() {
+		return Client.class;
+	}
+
+	@Override
+	public boolean isSingleton() {
+		return true;
+	}
+
+}

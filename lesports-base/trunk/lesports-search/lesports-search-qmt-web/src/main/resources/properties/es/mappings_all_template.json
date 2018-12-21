@@ -1,0 +1,113 @@
+{
+  "mappings": {
+    "VIDEO": {
+      "_all": {
+        "enabled": false
+      },
+      "dynamic_templates": [
+        {
+          "integer field": {
+            "mapping": {
+              "type": "integer",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "integer"
+          }
+        },
+        {
+          "date field": {
+            "mapping": {
+              "type": "date",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "date"
+          }
+        },
+        {
+          "long field": {
+            "mapping": {
+              "type": "long",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "long"
+          }
+        },
+        {
+          "float field": {
+            "mapping": {
+              "type": "float",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "float"
+          }
+        },
+        {
+          "double field": {
+            "mapping": {
+              "type": "double",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "double"
+          }
+        },
+        {
+          "byte field": {
+            "mapping": {
+              "type": "byte",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "byte"
+          }
+        },
+        {
+          "short field": {
+            "mapping": {
+              "type": "short",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "short"
+          }
+        },
+        {
+          "binary field": {
+            "mapping": {
+              "type": "binary",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "binary"
+          }
+        },
+        {
+          "geo_point field": {
+            "mapping": {
+              "type": "geo_point",
+              "doc_values": true
+            },
+            "match": "*",
+            "match_mapping_type": "geo_point"
+          }
+        },
+        {
+          "string fields": {
+            "mapping": {
+              "index": "analyzed",
+              "omit_norms": true,
+              "type": "string",
+              "doc_values": false
+            },
+            "match": "*",
+            "match_mapping_type": "string"
+          }
+        }
+      ]
+    }
+  }
+}

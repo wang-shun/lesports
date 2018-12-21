@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.lesports.id</groupId>
+    <artifactId>lesports-id-api-server</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <environment.group></environment.group>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment.name>dev</environment.name>
+                <environment.type>dev</environment.type>
+                <environment.group></environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>test-cn</id>
+            <properties>
+                <environment.name>test_cn</environment.name>
+                <environment.type>test</environment.type>
+                <environment.group>cn</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>test-cn1</id>
+            <properties>
+                <environment.name>test_cn1</environment.name>
+                <environment.type>test</environment.type>
+                <environment.group>cn1</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging-cn</id>
+            <properties>
+                <environment.name>staging_cn</environment.name>
+                <environment.type>staging</environment.type>
+                <environment.group>cn</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod-cn</id>
+            <properties>
+                <environment.name>prod_cn</environment.name>
+                <environment.type>prod</environment.type>
+                <environment.group>cn</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod-intra</id>
+            <properties>
+                <environment.name>prod_intra</environment.name>
+                <environment.type>prod</environment.type>
+                <environment.group>intra</environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>qmt-prod-cn</id>
+            <properties>
+                <environment.name>qmt_prod_cn</environment.name>
+                <environment.type>prod</environment.type>
+                <environment.group>qmt_cn</environment.group>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.artifactId}-${environment.name}-${project.version}</finalName>
+        <filters>
+            <filter>src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+        </filters>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.lesorts.id.server.TIdServer</mainClass>
+                        </manifest>
+                    </archive>
+                    <filters>
+                        <filter>${project.basedir}/src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+                    </filters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.lesports</groupId>
+                <artifactId>lesports-build-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.lesports.id</groupId>
+            <artifactId>lesports-id-service</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>me.ellios</groupId>
+            <artifactId>hedwig-server</artifactId>
+            <version>${hedwig.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

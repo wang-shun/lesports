@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+        <relativePath>../../../lesports-projects/trunk/lesports-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.lesports.crawler</groupId>
+    <artifactId>lesports-crawler</artifactId>
+    <packaging>pom</packaging>
+    <name>lesports-crawler</name>
+    <description>Lesports Applications</description>
+
+    <modules>
+        <module>lesports-crawler-core</module>
+        <module>lesports-crawler-worker</module>
+        <module>lesports-crawler-controller</module>
+    </modules>
+
+
+</project>

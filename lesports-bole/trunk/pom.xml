@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+        <relativePath>../../lesports-projects/trunk/lesports-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.lesports</groupId>
+    <artifactId>lesports-bole</artifactId>
+    <packaging>pom</packaging>
+    <name>lesports-bole</name>
+    <version>1.2.0-SNAPSHOT</version>
+    <description>Lesports Applications</description>
+
+    <modules>
+        <module>lesports-search</module>
+        <module>lesports-crawler</module>
+        <module>lesports-bole-common</module>
+        <module>lesports-bole-server</module>
+        <module>lesports-sms-data-import-storm</module>
+        <module>lesports-sms-data-import</module>
+        <module>lesports-sms-cooperation</module>
+        <module>lesports-sms-download</module>
+        <module>lesports-sms-data-import-qq</module>
+        <module>lesports-qmt-data-import</module>
+
+    </modules>
+
+
+</project>

@@ -1,0 +1,13 @@
+server:
+    port: 9693
+    #session-timeout: 10
+hedwig:
+    env: @environment.type@
+    zk:
+      group : @environment.group@
+socket:
+    ping:
+      interval : 5000
+    tcp:
+      keepalive : true
+

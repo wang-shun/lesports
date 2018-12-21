@@ -1,0 +1,105 @@
+<h3>赛事数据接入
+    <small>接入文件列表</small>
+</h3>
+<div ng-controller="ImportFileCtrl as dataimport" class="container-fluid">
+
+    <!-- start query panel-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <tags-input ng-model="dataimport.tags" display-property="name" key-property="id" placeholder="赛事名称" replace-spaces-with-dashes="false" add-from-autocomplete-only="true">
+                        <auto-complete source="dataimport.loadCompetitions($query)" min-length="0" load-on-focus="true" load-on-empty="false" debounce-delay="300"></auto-complete>
+                    </tags-input>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" ng-click="dataimport.search()">查看接入文件</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end  querypanel-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button ng-click="dataimport.addNewFile()" class="pull-right btn btn-purple btn-sm">添加文件</button>
+            <div class="panel-title">文件列表</div>
+        </div>
+        <table ng-table="dataimport.tableParams" class="table table-bordered table-striped">
+            <tbody>
+            <tr ng-repeat="item in $data">
+                <td data-title="'提供方'">{{item.partner_type}}</td>
+                <td data-title="'服务类型'">{{item.fileType}}</td>
+                <td data-title="'服务名称'">{{item.fileName}}</td>
+                <td data-title="'更新日期'">{{item.updateAt | moment_yyyymmddhhmmss : 'format' : 'YYYY-MM-DD HH:mm:ss'}}
+                </td>
+                <td data-title="'操作'">
+
+                    <button type="button" ng-hide="item.isOnline" ng-click="dataimport.online(item.fileName)"
+                            class="btn  btn-primary">上线
+                    </button>
+                    <button type="button" ng-show="item.isOnline" ng-click="dataimport.offline(item.fileName)"
+                            class="btn  btn-warning">下线
+                    </button>
+                    <button type="button"
+                            ng-click="dataimport.importData(item.fileType,item.fileName,item.partner_type)"
+                            class="btn  btn-info">接入数据
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/ng-template" id="templateId">
+    <div class="container-fluid">
+        <div class="panel border: none">
+            <div class="panel-heading">添加数据文件</div>
+            <form class="form-horizontal">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-lg-4">服务提供方</label>
+
+                        <div class="col-lg-6">
+                            <select class="form-control" ng-model="partner_type"
+                                    ng-options="status.type as status.name for status in dataimport.partnertypeList ">
+                                <option>请选择</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4">服务类型</label>
+
+                        <div class="col-lg-6">
+                            <select class="form-control" ng-model="file_type"
+                                    ng-options="status.type as status.name for status in dataimport.typeList ">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-4">服务名称</label>
+
+                        <div class="col-lg-6">
+                            <select class="form-control" ng-model="file_name"
+                                    ng-options="item for item in dataimport.filenameList ">
+                                <option>请选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-info" ng-click="savefile()">保存</button>
+                        </div>
+                        <div class="col-lg-3">
+                            <button class="btn btn-m btn-default" ng-click="closeThisDialog()">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

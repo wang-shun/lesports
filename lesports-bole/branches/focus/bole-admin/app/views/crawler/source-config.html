@@ -1,0 +1,89 @@
+<h3>来源管理</h3>
+<div ng-controller="SourceConfigCtrl as scc" class="container-fluid">
+    <div class="row" ng-repeat="config in scc.configs" id="{{config.site}}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{config.site}}配置
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal" role="form" ng-submit="scc.configOne(config.site,'MATCH')">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">图标名称</label>
+                        <div class="col-lg-4">
+                            <input type="text" ng-model="scc.configMap[config.site].iconName" class="form-control" placeholder="请输入图标名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">图标URL</label>
+                        <div class="col-lg-4">
+                            <input type="url" ng-model="scc.configMap[config.site].iconUrl" class="form-control" placeholder="请输入图标URL">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">输出优先级</label>
+                        <div class="col-lg-4">
+                            <input type="number" ng-model="scc.configMap[config.site].priority" class="form-control" placeholder="请输入一个正整数，1表示最高优先级" min="1" integer>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="col-lg-2 control-label">输出选项</label>
+                        <div class="col-lg-2">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" value="ALL" ng-model="scc.configMap[config.site].outputOption" />
+                                    <span class="fa fa-circle"></span>全部输出
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" value="BLACKLIST" ng-model="scc.configMap[config.site].outputOption" />
+                                    <span class="fa fa-circle"></span>不输出选定赛事
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" value="WHITELIST" ng-model="scc.configMap[config.site].outputOption" />
+                                    <span class="fa fa-circle"></span>仅输出选定赛事
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" value="NONE" ng-model="scc.configMap[config.site].outputOption" />
+                                    <span class="fa fa-circle"></span>关闭
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <tags-input ng-model="scc.configMap[config.site].tags" display-property="name" key-property="id" placeholder="请输入赛事名称" replace-spaces-with-dashes="false" add-from-autocomplete-only="true">
+                                <auto-complete source="scc.loadCompetitions($query)" min-length="0" load-on-focus="true" load-on-empty="false" debounce-delay="300"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-2 col-lg-offset-8">
+                            <button type="submit" class="btn btn-lg btn-info" >保存</button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-lg btn-danger" ng-click="scc.openConfirm(config.site,'MATCH')">删除</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="confirmDialog">
+        <div class="ngdialog-message">
+            <p>确认删除此配置吗？</p>
+            <button type="button" ng-click="confirm()" class="btn btn-sm btn-primary mr">确定</button>
+            <button type="button" ng-click="closeThisDialog()" class="btn btn-sm btn-default">取消</button>
+        </div>
+    </script>
+</div>

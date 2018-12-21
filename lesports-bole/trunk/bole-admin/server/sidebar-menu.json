@@ -1,0 +1,38 @@
+[
+  {
+    "text": "Menu Heading",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER"
+  },
+  {
+    "text": "data",
+    "sref": "#",
+    "icon": "icon-grid",
+    "submenu": [
+      { "text": "competition",     "sref": "app.competition", "translate": "sidebar.nav.data.competition" },
+      { "text": "competitor",     "sref": "app.competitor", "translate": "sidebar.nav.data.competitor" },
+      { "text": "match",     "sref": "app.match", "translate": "sidebar.nav.data.match" },
+        { "text": "importfile",     "sref": "app.importfile", "translate": "sidebar.nav.data.importfile" }
+    ],
+    "translate": "sidebar.nav.data.DATA"
+  },
+  {
+    "text": "crawler",
+    "sref": "#",
+    "icon": "icon-grid",
+    "submenu": [
+      { "text": "source",     "sref": "app.crawler-source", "translate": "sidebar.nav.crawler.source" },
+      { "text": "config",     "sref": "app.crawler-config", "translate": "sidebar.nav.crawler.config" }
+    ],
+    "translate": "sidebar.nav.crawler.CRAWLER"
+  },
+  {
+    "text": "olympics",
+    "sref": "#",
+    "icon": "icon-grid",
+    "submenu": [
+      { "text": "olympics_config",     "sref": "app.olympics-config", "translate": "sidebar.nav.olympics.config" }
+    ],
+    "translate": "sidebar.nav.olympics.OLYMPICS"
+  }
+]

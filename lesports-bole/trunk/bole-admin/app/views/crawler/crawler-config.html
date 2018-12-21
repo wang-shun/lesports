@@ -1,0 +1,43 @@
+<h3>爬虫配置</h3>
+<div ng-controller="CrawlerConfigCtrl as ccc" class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            赛程抓取配置
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">ZHIBO8</label>
+                    <div class="col-sm-10">
+                        <label class="switch">
+                            <input type="checkbox" ng-model="ccc.matchZhibo8" ng-click="ccc.config(1,1,$event)" />
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">QQ</label>
+                    <div class="col-sm-10">
+                        <label class="switch">
+                            <input type="checkbox" ng-model="ccc.matchQQ" ng-click="ccc.config(2,1,$event)" />
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">SINA</label>
+                    <div class="col-sm-10">
+                        <label class="switch">
+                            <input type="checkbox" ng-model="ccc.matchSina" ng-click="ccc.config(3,1,$event)" />
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

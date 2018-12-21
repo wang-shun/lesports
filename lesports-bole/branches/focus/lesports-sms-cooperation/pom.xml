@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lesports</groupId>
+        <artifactId>lesports-parent</artifactId>
+        <version>1.3.0-SNAPSHOT</version>
+        <relativePath>../../../lesports-parent/pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.lesports.sms</groupId>
+    <artifactId>lesports-sms-cooperation</artifactId>
+    <packaging>jar</packaging>
+    <name>lesports-sms-cooperation</name>
+    <description>lesports sms cooperation</description>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment.name>dev</environment.name>
+                <environment.type>dev</environment.type>
+                <environment.group></environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <environment.name>test</environment.name>
+                <environment.type>test</environment.type>
+                <environment.group></environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging</id>
+            <properties>
+                <environment.name>staging</environment.name>
+                <environment.type>staging</environment.type>
+                <environment.group></environment.group>
+                <environment.service>staging</environment.service>
+            </properties>
+        </profile>
+        <profile>
+            <id>staging1</id>
+            <properties>
+                <environment.name>staging1</environment.name>
+                <environment.type>staging1</environment.type>
+                <environment.group></environment.group>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod-intra</id>
+            <properties>
+                <environment.name>prod-intra</environment.name>
+                <environment.type>prod</environment.type>
+                <environment.group>intra</environment.group>
+                <environment.service>cn</environment.service>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <build>
+        <finalName>${project.artifactId}-${environment.type}-${project.version}</finalName>
+        <filters>
+            <filter>src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+        </filters>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <filters>
+                        <filter>${project.basedir}/src/main/filters/filter_zh_CN_${environment.name}.properties</filter>
+                    </filters>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.lesports</groupId>
+                <artifactId>lesports-build-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lesports.sms</groupId>
+            <artifactId>lesports-sbds-rpc-internal-client</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports</groupId>
+            <artifactId>lesports-third-party-api</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports.sms</groupId>
+            <artifactId>lesports-tlive-rpc-internal-client</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports.sms</groupId>
+            <artifactId>lesports-sops-rpc-internal-client</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports.sms</groupId>
+            <artifactId>lesports-sops-rpc-api-client</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports.sms</groupId>
+            <artifactId>lesports-sbds-rpc-api-client</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lesports</groupId>
+            <artifactId>lesports-jersey-spring-support</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.2.9</version>
+        </dependency>
+    </dependencies>
+
+
+
+</project>
